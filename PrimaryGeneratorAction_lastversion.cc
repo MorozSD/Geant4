@@ -38,6 +38,7 @@
 #include "G4ChargedGeantino.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
+#include "G4PrimaryParticle.hh"
 
 namespace B3
 {
@@ -46,41 +47,39 @@ namespace B3
 
 PrimaryGeneratorAction::PrimaryGeneratorAction()
 {
-  G4int n_particle = 1;
-  fParticleGun  = new G4ParticleGun(n_particle);
-
-  // default particle kinematic
-
-  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+  
+ // G4int n_particle = 1;
+ G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
   G4ParticleDefinition* particle
                     = particleTable->FindParticle("proton");
-  fParticleGun->SetParticleDefinition(particle);
-  fParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
-  //fParticleGun->SetParticleEnergy(1*MeV);
- }
+ G4PrimaryParticle* p =  new G4PrimaryParticle(particle);
  
  PrimaryGeneratorAction::~PrimaryGeneratorAction()
+ {
+ delete p;
+ delete vertex;
+ }
+ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-  delete fParticleGun;
-}
-
-void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
-{
-  //fParticleGun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
-  G4double phi = G4UniformRand()*2*CLHEP::pi;
+ 
+ G4double energy = G4UniformRand()*1*GeV + 0.1*GeV; 
+ p->SetKineticEnergy( energy );
+ 
+ G4double phi = G4UniformRand()*2*CLHEP::pi;
  G4double teta = G4UniformRand()*2*CLHEP::pi;
  
- G4double px = std::sin(teta)*std::cos(phi);
- G4double py = std::sin(teta)*std::sin(phi);
- G4double pz = std::cos(teta);
+ G4double px = -std::sin(teta)*std::cos(phi);
+ G4double py = -std::sin(teta)*std::sin(phi);
+ G4double pz = -std::cos(teta);
  
-  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(px,py,pz));
-  
-  G4double energy = G4UniformRand()*1*GeV + 0.1*GeV; 
-  fParticleGun->SetParticleEnergy(energy);
-  //create vertex
-  //
-  fParticleGun->GeneratePrimaryVertex(anEvent);
-}
-  
-}
+ p->SetMomentumDirection( G4ThreeVector(px,py,pz) );
+
+ p->SetPolarization(G4ThreeVector(px,py,pz));
+ G4double time = 10*ns;
+ //p->SetTime( time );
+ G4PrimaryVertex* vertex = new G4PrimaryVertex(G4ThreeVector(0.,0.,0.), time);
+ //void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+// {
+ vertex->SetPrimary( p );
+ anEvent->AddPrimaryVertex( vertex );
+ }
