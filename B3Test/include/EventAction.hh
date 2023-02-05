@@ -58,13 +58,6 @@ class EventAction : public G4UserEventAction
    
 };
 
-// inline functions
-
-//inline void EventAction::AddAbs(G4double dn) {
-  void EventAction::AddAbs(G4double dn) {
-  fEdep += dn;
-}
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

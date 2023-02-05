@@ -272,7 +272,7 @@ G4Tubs* solidPET =
  // G4VisAttributes* PETTube = new G4VisAttributes(G4Colour(1.0,0.0,0.0));
  // PETTube->SetVisibility(true);
 // logicPatient->SetVisAttributes(PETTube);
-  G4VisAttributes* PETTube = new G4VisAttributes(G4Colour(1.0,0.0,0.0));
+  G4VisAttributes* PETTube = new G4VisAttributes(G4Colour(1.0,0.0,1.0));
   //PETTube->SetVisibility(true);
   logicPET->SetVisAttributes(PETTube);
 

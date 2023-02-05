@@ -32,8 +32,6 @@
 #include "EventAction.hh"
 #include "DetectorConstruction.hh"
 #include "SteppingAction.hh"
-//#include "PrimaryGeneratorAction.hh"
-//#include "StackingAction.hh"
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

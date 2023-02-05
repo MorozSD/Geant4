@@ -50,6 +50,9 @@ SteppingAction::~SteppingAction()
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ void EventAction::AddAbs(G4double dn) {
+  fEdep += dn;
+}
 
 void SteppingAction::UserSteppingAction(const G4Step* step)
 {
@@ -62,20 +65,12 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   auto edep = step->GetTotalEnergyDeposit();
 
   // step length
-  
-  
- // G4double stepLength = 0.;
-//  if ( step->GetTrack()->GetDefinition()->GetPDGCharge() != 0. ) {
-//    stepLength = step->GetStepLength();
-//  }
 
   if ( volume == fDetConstruction->GetCrystalPV() ) {
     fEventAction->AddAbs(edep);
   }
 
-  //if ( volume == fDetConstruction->GetGapPV() ) {
-  //  fEventAction->AddGap(edep,stepLength);
-  //}
+  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

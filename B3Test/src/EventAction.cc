@@ -76,7 +76,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
  // analysisManager->FillNtupleDColumn(0, ffNumber);
  // analysisManager->AddNtupleRow();
   
-  G4cout << "Energy deposit = " << fEdep << G4endl;
+  G4cout << "Energy deposit = " <<G4BestUnit(fEdep,"Energy")<< G4endl;
 
 
 }

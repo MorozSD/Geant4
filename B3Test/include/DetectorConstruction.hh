@@ -71,13 +71,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     G4VPhysicalVolume* fCrystalPV = nullptr; // the absorber physical volume
     
     G4bool fCheckOverlaps = true;
-    
- //inline const G4VPhysicalVolume* DetectorConstruction::GetCrystalPV() {
- inline const G4VPhysicalVolume* GetCrystalPV() {
- 
+};  
+
+inline const G4VPhysicalVolume* DetectorConstruction::GetCrystalPV() const {
   return fCrystalPV;
 }
-};
+
 
 //}
 
