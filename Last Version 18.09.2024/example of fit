@@ -1,0 +1,68 @@
+  G4bool fixedinter = false;                         // Fixed the intercept (coefficient A0)
+                  G4int wtype = 0;                                   // Weight: 0 = none (default), 1 = sigma, 2 = 1/sigma^2
+                  G4double fixedinterval = 0.;                       // The fixed intercept value (if applicable)
+                  G4double alphaval = 0.05;                          // Critical apha value
+
+   // Input values
+ // **************************************************************          
+             
+                
+                               
+                 // Definition of other variables
+    // **************************************************************
+    		 size_t n = 0;                                    // Number of data points (adjusted later)
+    		 size_t nstar = 0;                                // equal to n (fixed intercept) or (n-1) not fixed
+    	  	// G4double coefbeta[k_fit+1];                            // Coefficients of the polynomial
+   		 G4double serbeta[k_fit+1];                             // Standard error on coefficients
+   		 G4double tstudentval = 0.;                         // Student t value
+   		 G4double SE = 0.;                                  // Standard error
+    
+    		 G4double **XTWXInv;                                // Matrix XTWX Inverse [k+1,k+1]
+   		 G4double **Weights;                                // Matrix Weights [n,n]
+
+
+    // Initialize values
+    // **************************************************************
+    		 n = sizeof(x)/sizeof(G4double);
+    		 G4cout << " n = " << n << G4endl;
+    		 nstar = n-1;
+    		 if (fixedinter) nstar = n;
+           
+ 
+   		 XTWXInv = Make2DArray(k_fit+1,k_fit+1);
+   		 Weights = Make2DArray(n,n);
+
+    // Build the weight matrix
+    // **************************************************************
+   		 CalculateWeights(erry, Weights, n, wtype);
+    
+
+    // Calculate the coefficients of the fit
+    // **************************************************************
+   		 PolyFit(x,y,n,k_fit,fixedinter,fixedinterval,coefbeta,Weights,XTWXInv);
+
+
+    // Calculate related values
+    // **************************************************************
+   		 G4double RSS = CalculateRSS(x,y,coefbeta,Weights,std::fixed,n,k_fit+1);
+   		 G4double TSS = CalculateTSS(x,y,coefbeta,Weights,fixedinter,n,k_fit+1);
+   		 G4double R2 = CalculateR2COD(x,y,coefbeta,Weights,fixedinter,n,k_fit+1);
+   		 G4double R2Adj = CalculateR2Adj(x,y,coefbeta,Weights,fixedinter,n,k_fit+1);
+
+    if ((nstar-k_fit)>0) {
+        SE = std::sqrt(RSS/(nstar-k_fit)); 
+        tstudentval = std::fabs(CalculateTValueStudent(nstar-k_fit, 1.-0.5*alphaval)); 
+    }
+ //   G4cout << "t-student value: " << tstudentval << G4endl << G4endl;
+
+    // Calculate the standard errors on the coefficients
+    // **************************************************************
+    CalculateSERRBeta(fixedinter,SE,k_fit,serbeta,XTWXInv);
+
+    // Display polynomial
+    // **************************************************************
+    DisplayPolynomial(k_fit);
+
+    // Display polynomial coefficients
+    // **************************************************************
+    DisplayCoefs(k_fit, nstar, tstudentval, coefbeta, serbeta);
