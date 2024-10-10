@@ -1,0 +1,7 @@
+/home/sveta/Geant4/Projects/Last Version 18.09.2024/build/CMakeFiles/userPrimaryGenerator.dir
+/home/sveta/Geant4/Projects/Last Version 18.09.2024/build/CMakeFiles/edit_cache.dir
+/home/sveta/Geant4/Projects/Last Version 18.09.2024/build/CMakeFiles/rebuild_cache.dir
+/home/sveta/Geant4/Projects/Last Version 18.09.2024/build/CMakeFiles/list_install_components.dir
+/home/sveta/Geant4/Projects/Last Version 18.09.2024/build/CMakeFiles/install.dir
+/home/sveta/Geant4/Projects/Last Version 18.09.2024/build/CMakeFiles/install/local.dir
+/home/sveta/Geant4/Projects/Last Version 18.09.2024/build/CMakeFiles/install/strip.dir
