@@ -1,0 +1,10 @@
+# to bun run interactively with visualization
+#
+/control/verbose 2
+/run/verbose 1
+#
+/run/initialize
+#
+/tracking/verbose 1
+/run/beamOn 1
+
