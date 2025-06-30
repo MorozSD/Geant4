@@ -1,0 +1,38 @@
+/control/verbose 2
+/run/verbose 2
+/run/initialize
+
+#/vis/open OGL 800x800-0+0
+#/vis/viewer/set/autoRefresh false
+#/vis/verbose errors
+
+#/vis/drawVolume
+
+#/vis/viewer/set/viewpointThetaPhi 110 150
+
+
+#/vis/viewer/zoom 1.0
+
+#/vis/viewer/set/style wireframe
+
+#/vis/set/lineWidth 2.5
+#/vis/scene/add/axes 0 0 0 10 cm white
+#/vis/set/lineWidth
+
+#/vis/scene/add/trajectories smooth  
+#/vis/modeling/trajectories/create/drawByCharge
+#/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+#/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 2
+
+#/vis/scene/add/hits  
+
+#/vis/filtering/trajectories/create/particleFilter
+#/vis/filtering/trajectories/particleFilter-0/add gamma
+
+#/vis/filtering/trajectories/particleFilter-0/invert true
+
+#/vis/scene/endOfEventAction accumulate
+
+#/vis/viewer/set/autoRefresh true
+#/vis/verbose warnings
+
