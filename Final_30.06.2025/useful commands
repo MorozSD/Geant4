@@ -1,0 +1,24 @@
+CMAKE_PREFIX_PATH=/home/sveta/Projects/pythia8309/pythia8309
+
+source /home/sveta/Geant4/install-dbg/bin/geant4.sh
+
+G4UI_USE_TCSH=1 ./userPrimaryGenerator
+
+
+export CMAKE_PREFIX_PATH=/home/sveta/Pythia/pythia8312
+
+for share folder sudo mount -t vboxsf Ubuntu ~/Desktop/WinFolder
+
+
+
+source /home/sveta/GeoModel/geomodel.sh
+
+cmake -DGeant4_DIR=$G4DIR /home/sveta/Geant4/Projects/Last\ Version\ 29.04.25
+
+cmake -DCMAKE_PREFIX_PATH=/home/sveta/GeoModel/cmake/ -DGeoModel_DIR=/home/sveta/GeoModel/ ..
+
+compile in cmd g++ Script_count.cpp -o count
+./count
+
+G4UI_USE_TCSH=1 ./userPrimaryGenerator |tee -a output.txt
+
